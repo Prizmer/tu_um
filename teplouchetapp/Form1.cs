@@ -16,9 +16,15 @@ using System.Diagnostics;
 using System.Globalization;
 //using System.Configuration.Assemblies;
 
-using ElfApatorCommonDriver;
+using System.Net;
+using System.Net.Sockets;
 
+using Drivers.UMDriver;
+using Drivers.LibMeter;
 using PollingLibraries.LibLogger;
+using PollingLibraries.LibPorts;
+
+
 
 namespace elfextendedapp
 {
@@ -172,7 +178,7 @@ namespace elfextendedapp
 
         #endregion
 
-        UM_RTU40 Meter = null;
+        UMRTU40Driver Meter = null;
         VirtualPort Vp = null;
 
         //изначально ни один процесс не выполняется, все остановлены
@@ -198,7 +204,7 @@ namespace elfextendedapp
 
             try
             {
-                Meter = new UM_RTU40();
+                Meter = new UMRTU40Driver();
                 Meter.Init(mAddr, mPass, virtPort);
                 return true;
             }
@@ -258,7 +264,11 @@ namespace elfextendedapp
                 }
                 else
                 {
-                    Vp = new TcpipPort(textBoxIp.Text, int.Parse(textBoxPort.Text), write_timeout, read_timeout, 0);
+                    System.Collections.Specialized.NameValueCollection loadedAppSettings = new System.Collections.Specialized.NameValueCollection();
+                    string tmpLocIp = ConfigurationSettings.AppSettings["localEndPointIp"];
+                    loadedAppSettings.Add("localEndPointIp", tmpLocIp);
+
+                    Vp = new TcpipPort(textBoxIp.Text, int.Parse(textBoxPort.Text), write_timeout, read_timeout, 0, loadedAppSettings);
                 }
 
                 uint mAddr = 0xFD;
@@ -269,7 +279,7 @@ namespace elfextendedapp
                 //check vp settings
                 if (!checkBoxTcp.Checked)
                 {
-                    SerialPort tmpSP = Vp.getSerialPortObject();
+                    SerialPort tmpSP = (SerialPort)Vp.GetPortObject();
                     if (!DemoMode)
                     {
                         toolStripStatusLabel2.Text = String.Format("{0}-{1}-{2}-DTR({3})-RTimeout: {4}ms", tmpSP.PortName, tmpSP.BaudRate, tmpSP.Parity, tmpSP.DtrEnable, read_timeout);
@@ -323,6 +333,7 @@ namespace elfextendedapp
             MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+
         private void Form1_Load(object sender, EventArgs e)
         {
             checkBoxTcp.Checked = true;
@@ -334,6 +345,15 @@ namespace elfextendedapp
             sfd1.FileName = ofd1.FileName;
 
 
+ 
+            //привязываются здесь, чтобы можно было выше задать значения без вызова обработчиков
+            comboBoxComPorts.SelectedIndexChanged += new EventHandler(comboBoxComPorts_SelectedIndexChanged);
+            numericUpDownComReadTimeout.ValueChanged += new EventHandler(numericUpDownComReadTimeout_ValueChanged);
+            numericUpDownComWriteTimeout.ValueChanged += new EventHandler(numericUpDownComWriteTimeout_ValueChanged);
+
+            meterPinged += new EventHandler(Form1_meterPinged);
+            pollingEnd += new EventHandler(Form1_pollingEnd);
+
             if (!checkBoxTcp.Checked)
             {
                 if (!refreshSerialPortComboBox()) return;
@@ -341,13 +361,7 @@ namespace elfextendedapp
             }
             if (!setXlsParser()) return;
 
-            //привязываются здесь, чтобы можно было выше задать значения без вызова обработчиков
-            comboBoxComPorts.SelectedIndexChanged += new EventHandler(comboBoxComPorts_SelectedIndexChanged);
-            numericUpDownComReadTimeout.ValueChanged +=new EventHandler(numericUpDownComReadTimeout_ValueChanged);
-            numericUpDownComWriteTimeout.ValueChanged += new EventHandler(numericUpDownComWriteTimeout_ValueChanged);
-            
-            meterPinged += new EventHandler(Form1_meterPinged);
-            pollingEnd += new EventHandler(Form1_pollingEnd);
+
 
         }
 
@@ -573,14 +587,18 @@ namespace elfextendedapp
         public event EventHandler meterPinged;
         void Form1_meterPinged(object sender, EventArgs e)
         {
-            incrProgressBar();
+
+            Invoke(new MethodInvoker(() => { incrProgressBar(); })); 
         }
 
         public event EventHandler pollingEnd;
         void Form1_pollingEnd(object sender, EventArgs e)
         {
-            InProgress = false;
-            doStopProcess = false;
+            Invoke(new MethodInvoker(() => {
+                InProgress = false;
+                doStopProcess = false;
+            }));
+
         }
 
         Thread pingThr = null;
@@ -600,6 +618,30 @@ namespace elfextendedapp
         private void pingMeters(Object metersDt)
         {
             return;
+        }
+
+        private void pollMeters(Object metersPrms)
+        {
+            PollMetersArguments pma = (PollMetersArguments)metersPrms;
+
+            switch (selectedParamType)
+            {
+                case ParamTypes.daily:
+                    {
+                        doPollDaily(pma);
+                        break;
+                    }
+                case ParamTypes.monthly:
+                    {
+                        doPollMonthly(pma);
+                        break;
+                    }
+                case ParamTypes.halfs:
+                    {
+                        doPollSlices(pma);
+                        break;
+                    }
+            }
         }
 
         struct PollMetersArguments
@@ -627,37 +669,8 @@ namespace elfextendedapp
             pma.dt = dt;
             pma.incorrectRows = null;
 
-            //pingThr = new Thread(pollMeters);
-            //pingThr.Start((object)pma);
-            //int metersCount = 0;
-            //if (!Meter.getMetersTableEntriesNumber(out metersCount))
-            //{
-            //    MessageBox.Show("Не удалось определить кол-во записей в таблице счетчиков");
-            //    return;
-            //}
-
-           //Meter.sendAbort();
-
-            switch (selectedParamType)
-            {
-                case ParamTypes.daily:
-                {
-                    doPollDaily(pma);
-                    break;
-                }
-                case ParamTypes.monthly:
-                {
-                    doPollMonthly(pma);
-                    break;
-                }
-                case ParamTypes.halfs:
-                {
-                    doPollSlices(pma);
-                    break;
-                }
-            }
-
-            InProgress = false;
+            pingThr = new Thread(pollMeters);
+            pingThr.Start((object)pma);
         }
 
 
@@ -706,15 +719,20 @@ namespace elfextendedapp
 
                 Meter.Init(0, meterId.ToString(), Vp);
 
-                List<UM_RTU40.ValueUM> valueList = new List<UM_RTU40.ValueUM>();
+                List<UMRTU40Driver.ValueUM> valueList = new List<UMRTU40Driver.ValueUM>();
                 List<RecordPowerSlice> rpsList = new List<RecordPowerSlice>();
                 
                 float[] results = new float[capturedParams.Length];
+                for (int k = 0; k < capturedParams.Length; k++)
+                    results[k] = -1;
+
+                int tarifsToRead = 5;
+
                 switch (paramType)
                 {
                     case ParamTypes.daily:
                         {
-                            for (ushort t = 0; t < 3; t++)
+                            for (ushort t = 0; t < tarifsToRead; t++)
                                 if (!checkBox1.Checked) Meter.ReadDailyValues(DateTime.Now.Date, 0, t, ref results[t]);
                                 else Meter.ReadDailyValues2(0, t, ref results[t]);
 
@@ -722,7 +740,7 @@ namespace elfextendedapp
                         }
                     case ParamTypes.monthly:
                         {
-                            for (ushort t = 0; t < 3; t++)
+                            for (ushort t = 0; t < tarifsToRead; t++)
                                 Meter.ReadMonthlyValues(DateTime.Now.Date, 0, t, ref results[t]);
 
                             break;
@@ -744,7 +762,7 @@ namespace elfextendedapp
                 {
                     for (int j = 0; j < results.Length; j++)
                     {
-                        dt.Rows[i][newColIndex + j] = results[j];
+                        dt.Rows[i][newColIndex + j] = (results[j] == -1 ? "" : results[j].ToString());
                     }
                 }
                 else
@@ -761,14 +779,19 @@ namespace elfextendedapp
 
 
                 Invoke(new MethodInvoker(() => { dgv1.DataSource = dt; dgv1.Refresh(); }));
+
+                if (meterPinged != null)
+                    meterPinged(this, new EventArgs());
+
+                if (doStopProcess) break;
             }
 
-            Vp.ClosePort();
+            Vp.Close();
 
             if (pollingEnd != null)
                 pollingEnd.Invoke(this, new EventArgs());
- 
-            
+
+
         }
 
         private void doPollDaily(PollMetersArguments pmaInp)
@@ -850,8 +873,7 @@ namespace elfextendedapp
                 return;
             }
 
-            if (Vp.isOpened())
-                Vp.ClosePort();
+                Vp.Close();
         }
 
         private void DeleteLogFiles()
@@ -1016,12 +1038,12 @@ namespace elfextendedapp
             //RecordPowerSlice rps = new RecordPowerSlice();
             //Meter.parseSingleSliceString("", ref rps);
             //Meter.test()
-            return;
+           // return;
 
             if (!Meter.getMetersTable(ref metersDataTable))
             {
                 InProgress = false;
-                Vp.ClosePort();
+                Vp.Close();
                 MessageBox.Show("Не удалось прочитать таблицу приборов", "Ошибка соединения",  MessageBoxButtons.OK, MessageBoxIcon.Error);
                 
                 return;
@@ -1038,7 +1060,7 @@ namespace elfextendedapp
             InputDataReady = true;
             pollingByMetersTable = true;
 
-            Vp.ClosePort();
+            Vp.Close();
         }
 
         private void rbSelectParamsType_CheckedChanged(object sender, EventArgs e)
