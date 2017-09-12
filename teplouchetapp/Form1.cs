@@ -251,16 +251,34 @@ namespace elfextendedapp
 
                 if (!checkBoxTcp.Checked)
                 {
-                    SerialPort m_Port = new SerialPort(comboBoxComPorts.Items[comboBoxComPorts.SelectedIndex].ToString());
+                    //SerialPort m_Port = new SerialPort(comboBoxComPorts.Items[comboBoxComPorts.SelectedIndex].ToString());
 
-                    m_Port.BaudRate = int.Parse(ConfigurationSettings.AppSettings["baudrate"]);
-                    m_Port.DataBits = int.Parse(ConfigurationSettings.AppSettings["databits"]);
-                    m_Port.Parity = (Parity)int.Parse(ConfigurationSettings.AppSettings["parity"]);
-                    m_Port.StopBits = (StopBits)int.Parse(ConfigurationSettings.AppSettings["stopbits"]);
-                    m_Port.DtrEnable = bool.Parse(ConfigurationSettings.AppSettings["dtr"]);
+                    //m_Port.BaudRate = int.Parse(ConfigurationSettings.AppSettings["baudrate"]);
+                    //m_Port.DataBits = int.Parse(ConfigurationSettings.AppSettings["databits"]);
+                    //m_Port.Parity = (Parity)int.Parse(ConfigurationSettings.AppSettings["parity"]);
+                    //m_Port.StopBits = (StopBits)int.Parse(ConfigurationSettings.AppSettings["stopbits"]);
+                    //m_Port.DtrEnable = bool.Parse(ConfigurationSettings.AppSettings["dtr"]);
 
                     //meters initialized by secondary id (factory n) respond to 0xFD primary addr
-                    Vp = new ComPort(m_Port, attempts, read_timeout, write_timeout);
+                    //Vp = new ComPort(m_Port, attempts, read_timeout, write_timeout);
+
+                    ComPortSettings cps = new ComPortSettings();
+                    cps.name = comboBoxComPorts.Items[comboBoxComPorts.SelectedIndex].ToString().Replace("COM", "");
+                    cps.baudrate = uint.Parse(ConfigurationSettings.AppSettings["baudrate"]);
+                    cps.data_bits = byte.Parse(ConfigurationSettings.AppSettings["databits"]);
+                    cps.parity = byte.Parse(ConfigurationSettings.AppSettings["parity"]);
+                    cps.stop_bits = byte.Parse(ConfigurationSettings.AppSettings["stopbits"]);
+                    cps.read_timeout = read_timeout;
+                    cps.write_timeout = write_timeout;
+                    cps.attempts = attempts;
+
+                    cps.gsm_on = true;
+                    cps.gsm_phone_number = "89169012107";
+                    cps.gsm_init_string = "";
+
+                    //todo: dtr
+                    //cps.dtr = bool.Parse(ConfigurationSettings.AppSettings["dtr"]);
+                    Vp = new ComPort(cps);
                 }
                 else
                 {
