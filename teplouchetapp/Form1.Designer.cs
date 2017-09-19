@@ -401,12 +401,12 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(414, 14);
+            this.richTextBox1.Location = new System.Drawing.Point(457, 14);
             this.richTextBox1.Margin = new System.Windows.Forms.Padding(2);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.richTextBox1.Size = new System.Drawing.Size(187, 39);
+            this.richTextBox1.Size = new System.Drawing.Size(144, 39);
             this.richTextBox1.TabIndex = 51;
             this.richTextBox1.Text = "";
             // 
@@ -428,7 +428,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(135, 20);
             this.textBox1.TabIndex = 49;
-            this.textBox1.Text = "20133295";
+            this.textBox1.Text = "89169012107";
             // 
             // pictureBoxLogo
             // 

@@ -271,13 +271,12 @@ namespace elfextendedapp
                     cps.read_timeout = read_timeout;
                     cps.write_timeout = write_timeout;
                     cps.attempts = attempts;
+                    cps.bDtr = bool.Parse(ConfigurationSettings.AppSettings["dtr"]);
 
                     cps.gsm_on = true;
-                    cps.gsm_phone_number = "89169012107";
+                    cps.gsm_phone_number = textBox1.Text;
                     cps.gsm_init_string = "";
 
-                    //todo: dtr
-                    //cps.dtr = bool.Parse(ConfigurationSettings.AppSettings["dtr"]);
                     Vp = new ComPort(cps);
                 }
                 else
