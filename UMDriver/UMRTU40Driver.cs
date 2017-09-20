@@ -202,7 +202,7 @@ namespace Drivers.UMDriver
             Array.Copy(incommingData, 0, cuttedIncommingData, 0, cuttedIncommingData.Length);
 
             string answ = ASCIIEncoding.ASCII.GetString(cuttedIncommingData);
-            WriteToLog(answ);
+            WriteToLog("SoftwareVersion: " + answ);
 
             if (!answ.Contains("SW")) return false;
 
@@ -477,6 +477,7 @@ namespace Drivers.UMDriver
 
         }
 
+        //используется в обработчике интерфейса
         public bool getDailyValuesForID(int id, DateTime dt, out List<ValueUM> umVals)
         {
             umVals = new List<ValueUM>();
@@ -489,6 +490,8 @@ namespace Drivers.UMDriver
             m_vport.WriteReadData(FindPacketSignature, cmd.ToArray(), ref incommingData, cmd.Count, -1);
 
             string answ = ASCIIEncoding.ASCII.GetString(incommingData);
+            WriteToLog("getDailyValuesForID_ANSW: " + answ); 
+
 
             List<string> recordStringsForDates = new List<string>();
 

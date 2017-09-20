@@ -228,7 +228,7 @@
             this.numericUpDownComReadTimeout.Location = new System.Drawing.Point(101, 10);
             this.numericUpDownComReadTimeout.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDownComReadTimeout.Maximum = new decimal(new int[] {
-            20000,
+            35000,
             0,
             0,
             0});
@@ -242,7 +242,7 @@
             this.numericUpDownComReadTimeout.TabIndex = 45;
             this.toolTip1.SetToolTip(this.numericUpDownComReadTimeout, "Время ожидания ответа одного счетчика");
             this.numericUpDownComReadTimeout.Value = new decimal(new int[] {
-            10000,
+            30000,
             0,
             0,
             0});
