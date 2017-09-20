@@ -160,6 +160,8 @@ namespace Drivers.UMDriver
             Array.Copy(incommingData, 0, cuttedIncommingData, 0, cuttedIncommingData.Length);
 
             string answ = ASCIIEncoding.ASCII.GetString(cuttedIncommingData);
+            WriteToLog("readUMSerial: " + answ);
+
             if (!answ.Contains("UM_ID")) return false;
 
             serial_number = answ.Replace("UM_ID=", "");
@@ -239,15 +241,15 @@ namespace Drivers.UMDriver
             byte[] incommingData = new byte[1];
             m_vport.WriteReadData(FindPacketSignature, cmd.ToArray(), ref incommingData, cmd.Count, -1);
 
+
+
             if (incommingData.Length < 11)
             {
-                if (attempts == 0)
+                if (attempts < 2)
                 {
                     m_vport.Close();
                     attempts++;
-                    Thread.Sleep(1000);
-
-                    Thread.Sleep(1000);
+                    Thread.Sleep(2000);
                     goto TRY_AGAIN;
                 }
                 else
@@ -259,6 +261,8 @@ namespace Drivers.UMDriver
             }
 
             string answ = ASCIIEncoding.ASCII.GetString(incommingData);
+            WriteToLog("getMetersTableEntriesNumber: " + answ);
+
             if (!answ.Contains("TABLLEN"))
             {
                 return false;
@@ -307,7 +311,7 @@ namespace Drivers.UMDriver
 
         public bool getMetersTable(ref DataTable metersTable)
         {
-            OpenLinkCanal();
+            if (!OpenLinkCanal()) return false;
 
             readSWVersion(out softwareVersion);
 
@@ -362,8 +366,10 @@ namespace Drivers.UMDriver
                 TRY_AGAIN:
                 byte[] incommingData = new byte[1];
                 m_vport.WriteReadData(FindPacketSignature, cmd.ToArray(), ref incommingData, cmd.Count, -1);
-
                 string answ = ASCIIEncoding.ASCII.GetString(incommingData);
+
+                WriteToLog("getMetersTable, сам запрос таблицы: " + answ);
+
                 if (!answ.Contains("TABLEX")) continue;
 
 
@@ -970,7 +976,7 @@ namespace Drivers.UMDriver
                 if (readUMSerial(ref serial)) return true;
             }
 
-
+            WriteToLog("OpenLinkCanal: false");
             return false;
         }
 
