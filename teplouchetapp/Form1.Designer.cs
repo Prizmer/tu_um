@@ -305,7 +305,6 @@
             // 
             // button4
             // 
-            this.button4.Enabled = false;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Location = new System.Drawing.Point(152, 14);
             this.button4.Margin = new System.Windows.Forms.Padding(2);
