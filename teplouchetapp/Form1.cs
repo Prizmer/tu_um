@@ -1111,7 +1111,12 @@ namespace elfextendedapp
 
         private void button4_Click(object sender, EventArgs e)
         {
-            
+            List<UMRTU40Driver.ValueUM> lst = new List<UMRTU40Driver.ValueUM>();
+            Meter.getDailyValuesForID(int.Parse(textBox2.Text), DateTime.Now.Date, out lst);
+            richTextBox1.Clear();
+            richTextBox1.Text += lst.Count + " - записей\n";
+            richTextBox1.Text += lst[0].name + "\n";
+            richTextBox1.Text += lst[0].value + "\n";
         }
     }
 }
