@@ -63,7 +63,11 @@ namespace Drivers.UMDriver
             m_address = address;
             this.m_vport = data_vport;
 
-            meterIdParsingResult = int.TryParse(pass, out meterId);
+            meterIdParsingResult = true;
+            meterId = (int)address;
+
+            //
+           // int.TryParse(pass, out meterId);
             //this.password = pass.Length > 0 ? pass : "00000000";
 
 
@@ -971,7 +975,7 @@ namespace Drivers.UMDriver
         public bool OpenLinkCanal()
         {
             string serial = "";
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
                 if (readUMSerial(ref serial)) return true;
             }
