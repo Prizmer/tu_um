@@ -1111,12 +1111,25 @@ namespace elfextendedapp
 
         private void button4_Click(object sender, EventArgs e)
         {
-            List<UMRTU40Driver.ValueUM> lst = new List<UMRTU40Driver.ValueUM>();
-            Meter.getDailyValuesForID(int.Parse(textBox2.Text), DateTime.Now.Date, out lst);
-            richTextBox1.Clear();
-            richTextBox1.Text += lst.Count + " - записей\n";
-            richTextBox1.Text += lst[0].name + "\n";
-            richTextBox1.Text += lst[0].value + "\n";
+            if (rbDaily.Checked)
+            {
+                List<UMRTU40Driver.ValueUM> lst = new List<UMRTU40Driver.ValueUM>();
+                Meter.getDailyValuesForID(int.Parse(textBox2.Text), DateTime.Now.Date, out lst);
+                richTextBox1.Clear();
+                richTextBox1.Text += lst.Count + " - записей\n";
+                richTextBox1.Text += lst[0].name + "\n";
+                richTextBox1.Text += lst[0].value + "\n";
+            }else if (rbHalfs.Checked)
+            {
+                List<RecordPowerSlice> rpsl = new List<RecordPowerSlice>();
+                Meter.getSlicesValuesForID(int.Parse(textBox2.Text), DateTime.Now.Date, DateTime.Now, out rpsl);
+                richTextBox1.Clear();
+                richTextBox1.Text += rpsl.Count + " - получасовок\n";
+                richTextBox1.Text += rpsl[0].date_time.ToString() + "\n";
+                richTextBox1.Text += rpsl[0].APlus + "\n";
+                richTextBox1.Text += rpsl[0].AMinus + "\n";
+            }
+
         }
     }
 }
