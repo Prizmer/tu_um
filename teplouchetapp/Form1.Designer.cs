@@ -53,6 +53,8 @@
             this.button4 = new System.Windows.Forms.Button();
             this.btnGetMetersTable = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -67,8 +69,7 @@
             this.rbMonthly = new System.Windows.Forms.RadioButton();
             this.rbHalfs = new System.Windows.Forms.RadioButton();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).BeginInit();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComReadTimeout)).BeginInit();
@@ -184,7 +185,7 @@
             this.statusStrip1.Location = new System.Drawing.Point(0, 432);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(621, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(679, 22);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 43;
             this.statusStrip1.Text = "statusStrip1";
@@ -353,6 +354,23 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Индивидуальный блок";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(413, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(27, 13);
+            this.label6.TabIndex = 61;
+            this.label6.Text = "MID";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(412, 30);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(42, 20);
+            this.textBox2.TabIndex = 60;
+            this.textBox2.Text = "1";
+            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
@@ -508,28 +526,23 @@
             this.checkBox1.TabIndex = 58;
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // button1
             // 
-            this.textBox2.Location = new System.Drawing.Point(412, 30);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(42, 20);
-            this.textBox2.TabIndex = 60;
-            this.textBox2.Text = "1";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(413, 16);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(27, 13);
-            this.label6.TabIndex = 61;
-            this.label6.Text = "MID";
+            this.button1.Location = new System.Drawing.Point(621, 72);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(46, 43);
+            this.button1.TabIndex = 59;
+            this.button1.Text = "X";
+            this.toolTip1.SetToolTip(this.button1, "Попытаться DISCONECT");
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(621, 454);
+            this.ClientSize = new System.Drawing.Size(679, 454);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.rbHalfs);
             this.Controls.Add(this.rbMonthly);
@@ -608,6 +621,7 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button1;
     }
 }
 
