@@ -847,6 +847,7 @@ namespace Drivers.UMDriver
             m_vport.WriteReadData(FindPacketSignature, cmd.ToArray(), ref incommingData, cmd.Count, -1);
 
             string answ = ASCIIEncoding.ASCII.GetString(incommingData);
+            WriteToLog("Получасовки ответ: " + answ);
 
             int endIndex = answ.IndexOf("\nEND");
             if (endIndex == -1) return false;

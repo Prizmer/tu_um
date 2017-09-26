@@ -1124,10 +1124,12 @@ namespace elfextendedapp
                 List<RecordPowerSlice> rpsl = new List<RecordPowerSlice>();
                 Meter.getSlicesValuesForID(int.Parse(textBox2.Text), DateTime.Now.Date, DateTime.Now, out rpsl);
                 richTextBox1.Clear();
-                richTextBox1.Text += rpsl.Count + " - получасовок\n";
+                richTextBox1.Text += rpsl.Count + " - получасовок ApAmRpRm\n";
                 richTextBox1.Text += rpsl[0].date_time.ToString() + "\n";
                 richTextBox1.Text += rpsl[0].APlus + "\n";
                 richTextBox1.Text += rpsl[0].AMinus + "\n";
+                richTextBox1.Text += rpsl[0].RPlus + "\n";
+                richTextBox1.Text += rpsl[0].RMinus + "\n";
             }
 
         }
