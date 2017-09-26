@@ -779,9 +779,12 @@ namespace Drivers.UMDriver
         {
             powerSlice = new RecordPowerSlice();
 
+            //WriteToLog("parseSingleSliceString: " + sliceString);
+
             //здесь происходит разбор фрагмента ответа от DT до следующего DT
             //sliceString = "<DT.27.07.17 00:00:00 02 0<.<TD.1<.<FL.W;;;<.<DPAp.0.0025<.<DPAm.?<.<DPRp.0.0035<.<DPRm.?<.";
-            string dateStr = sliceString.Substring(4, 17);
+            int dateIdx = sliceString.IndexOf("DT");
+            string dateStr = sliceString.Substring(dateIdx + 2, 17);
 
             //!!! дата не учитывает сезон лето/зима, хотя драйвер присылает эту информацию
             DateTime sliceDt = new DateTime();
@@ -811,10 +814,10 @@ namespace Drivers.UMDriver
                 valueStringsList.Add("-1");
                 if (valueIndexesList[i] == -1) continue;
 
-                int tmpValueStartIndex = valueIndexesList[i] + valueCaptionLength;
+                int tmpValueStartIndex = valueIndexesList[i] + valueCaptionLength - 1;
                 int tmpValueEndIndex = sliceString.IndexOf("<", tmpValueStartIndex);
                 var tmpValString = sliceString.Substring(tmpValueStartIndex, tmpValueEndIndex - tmpValueStartIndex);
-                valueStringsList[0] = tmpValString.Replace("?", "0");
+                valueStringsList[i] = tmpValString.Replace("?", "0");
             }
 
             try

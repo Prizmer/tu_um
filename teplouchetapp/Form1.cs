@@ -378,6 +378,9 @@ namespace elfextendedapp
             }
             if (!setXlsParser()) return;
 
+            RecordPowerSlice rps = new RecordPowerSlice();
+            string tmlSlString = "<<DT26.09.17 07:00:00 02 0<<TD58<<FLS;;;<<DPAp0.068<<DPRp0<";
+            Meter.parseSingleSliceString(tmlSlString, ref rps);
 
 
         }
