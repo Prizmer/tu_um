@@ -779,7 +779,9 @@ namespace Drivers.UMDriver
         {
             powerSlice = new RecordPowerSlice();
 
-            //WriteToLog("parseSingleSliceString: " + sliceString);
+            WriteToLog("parseSingleSliceString: " + sliceString);
+            //содержит символ LF (0x0A)...
+            sliceString = sliceString.Replace(System.Environment.NewLine, "");
 
             //здесь происходит разбор фрагмента ответа от DT до следующего DT
             //sliceString = "<DT.27.07.17 00:00:00 02 0<.<TD.1<.<FL.W;;;<.<DPAp.0.0025<.<DPAm.?<.<DPRp.0.0035<.<DPRm.?<.";
