@@ -779,7 +779,9 @@ namespace Drivers.UMDriver
         {
             powerSlice = new RecordPowerSlice();
 
-            WriteToLog("parseSingleSliceString: " + sliceString);
+            WriteToLog("parseSingleSliceString str: " + sliceString);
+
+            WriteToLog("parseSingleSliceString bytes: " + BitConverter.ToString(ASCIIEncoding.ASCII.GetBytes(sliceString))) ;
             //содержит символ LF (0x0A)...
             sliceString = sliceString.Replace(System.Environment.NewLine, "");
 
