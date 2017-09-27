@@ -894,6 +894,8 @@ namespace elfextendedapp
             }
 
                 Vp.Close();
+
+            Thread.Sleep(2000);
         }
 
         private void DeleteLogFiles()
@@ -1146,7 +1148,14 @@ namespace elfextendedapp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ((SerialPort)(Vp.GetPortObject())).Open();
+            try
+            {
+                ((SerialPort)(Vp.GetPortObject())).Open();
+            }catch (Exception ex)
+            {
+
+       
+            }
             Vp.Close();
         }
     }
