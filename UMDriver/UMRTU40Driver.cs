@@ -779,11 +779,8 @@ namespace Drivers.UMDriver
         {
             powerSlice = new RecordPowerSlice();
 
-            WriteToLog("parseSingleSliceString str: " + sliceString);
-
-            WriteToLog("parseSingleSliceString bytes: " + BitConverter.ToString(ASCIIEncoding.ASCII.GetBytes(sliceString))) ;
-            //содержит символ LF (0x0A)...
-            sliceString = sliceString.Replace(System.Environment.NewLine, "");
+            //содержит символ \n (0x0A)...от него надо избавиться в данном блоке
+            sliceString = sliceString.Replace("\n", "");
 
             //здесь происходит разбор фрагмента ответа от DT до следующего DT
             //sliceString = "<DT.27.07.17 00:00:00 02 0<.<TD.1<.<FL.W;;;<.<DPAp.0.0025<.<DPAm.?<.<DPRp.0.0035<.<DPRm.?<.";
@@ -795,7 +792,8 @@ namespace Drivers.UMDriver
 
             if (!DateTime.TryParseExact(dateStr, "dd.MM.yy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out sliceDt))
             {
-                WriteToLog("Ошибка преобразования даты в методе parseSingleSliceString");
+                WriteToLog("Ошибка преобразования даты в методе parseSingleSliceString: " + sliceString);
+                WriteToLog("parseSingleSliceString bytes: " + BitConverter.ToString(ASCIIEncoding.ASCII.GetBytes(sliceString)));
                 return false;
             }
 
