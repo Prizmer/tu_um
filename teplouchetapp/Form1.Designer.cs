@@ -52,6 +52,7 @@
             this.checkBoxTcp = new System.Windows.Forms.CheckBox();
             this.button4 = new System.Windows.Forms.Button();
             this.btnGetMetersTable = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -69,7 +70,8 @@
             this.rbMonthly = new System.Windows.Forms.RadioButton();
             this.rbHalfs = new System.Windows.Forms.RadioButton();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.rbDriver1 = new System.Windows.Forms.RadioButton();
+            this.rbDriver2 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).BeginInit();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownComReadTimeout)).BeginInit();
@@ -82,10 +84,10 @@
             // 
             this.buttonImport.Enabled = false;
             this.buttonImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonImport.Location = new System.Drawing.Point(251, 3);
-            this.buttonImport.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonImport.Location = new System.Drawing.Point(335, 4);
+            this.buttonImport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(97, 25);
+            this.buttonImport.Size = new System.Drawing.Size(129, 31);
             this.buttonImport.TabIndex = 3;
             this.buttonImport.Text = "Импорт (*.xls)";
             this.toolTip1.SetToolTip(this.buttonImport, "Загрузить таблицу содержающую столбец с номерами квартир и столбец с заводскими н" +
@@ -118,8 +120,8 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgv1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgv1.Location = new System.Drawing.Point(5, 72);
-            this.dgv1.Margin = new System.Windows.Forms.Padding(2);
+            this.dgv1.Location = new System.Drawing.Point(7, 89);
+            this.dgv1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgv1.Name = "dgv1";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -130,7 +132,7 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgv1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgv1.RowTemplate.Height = 28;
-            this.dgv1.Size = new System.Drawing.Size(611, 293);
+            this.dgv1.Size = new System.Drawing.Size(815, 361);
             this.dgv1.TabIndex = 4;
             // 
             // ofd1
@@ -141,10 +143,10 @@
             // 
             this.buttonPoll.Enabled = false;
             this.buttonPoll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonPoll.Location = new System.Drawing.Point(285, 38);
-            this.buttonPoll.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonPoll.Location = new System.Drawing.Point(380, 47);
+            this.buttonPoll.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonPoll.Name = "buttonPoll";
-            this.buttonPoll.Size = new System.Drawing.Size(83, 25);
+            this.buttonPoll.Size = new System.Drawing.Size(111, 31);
             this.buttonPoll.TabIndex = 6;
             this.buttonPoll.Text = "Опрос";
             this.toolTip1.SetToolTip(this.buttonPoll, "Выполняются проверка связи и опрос счетчика по текущим значениям");
@@ -155,10 +157,10 @@
             // 
             this.buttonExport.Enabled = false;
             this.buttonExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonExport.Location = new System.Drawing.Point(352, 3);
-            this.buttonExport.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonExport.Location = new System.Drawing.Point(469, 4);
+            this.buttonExport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(97, 25);
+            this.buttonExport.Size = new System.Drawing.Size(129, 31);
             this.buttonExport.TabIndex = 41;
             this.buttonExport.Text = "Экспорт (*.xls)";
             this.toolTip1.SetToolTip(this.buttonExport, "Сохранить полученные в программе данные");
@@ -169,23 +171,24 @@
             // 
             this.comboBoxComPorts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxComPorts.FormattingEnabled = true;
-            this.comboBoxComPorts.Location = new System.Drawing.Point(8, 8);
-            this.comboBoxComPorts.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxComPorts.Location = new System.Drawing.Point(11, 10);
+            this.comboBoxComPorts.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxComPorts.Name = "comboBoxComPorts";
-            this.comboBoxComPorts.Size = new System.Drawing.Size(85, 21);
+            this.comboBoxComPorts.Size = new System.Drawing.Size(112, 24);
             this.comboBoxComPorts.TabIndex = 42;
             this.toolTip1.SetToolTip(this.comboBoxComPorts, "Системный последовательный порт");
             // 
             // statusStrip1
             // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1,
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 432);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 533);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(679, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 12, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(973, 26);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 43;
             this.statusStrip1.Text = "statusStrip1";
@@ -193,27 +196,27 @@
             // toolStripProgressBar1
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(133, 16);
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(177, 20);
             this.toolStripProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 21);
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(0, 17);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(0, 21);
             // 
             // buttonStop
             // 
             this.buttonStop.Enabled = false;
             this.buttonStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonStop.Location = new System.Drawing.Point(372, 38);
-            this.buttonStop.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonStop.Location = new System.Drawing.Point(496, 47);
+            this.buttonStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(77, 25);
+            this.buttonStop.Size = new System.Drawing.Size(103, 31);
             this.buttonStop.TabIndex = 44;
             this.buttonStop.Text = "Стоп";
             this.toolTip1.SetToolTip(this.buttonStop, "Прекращает длительные процессы в программе и закрывает системный порт");
@@ -228,8 +231,8 @@
             0,
             0,
             0});
-            this.numericUpDownComReadTimeout.Location = new System.Drawing.Point(101, 10);
-            this.numericUpDownComReadTimeout.Margin = new System.Windows.Forms.Padding(2);
+            this.numericUpDownComReadTimeout.Location = new System.Drawing.Point(135, 12);
+            this.numericUpDownComReadTimeout.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.numericUpDownComReadTimeout.Maximum = new decimal(new int[] {
             35000,
             0,
@@ -241,7 +244,7 @@
             0,
             0});
             this.numericUpDownComReadTimeout.Name = "numericUpDownComReadTimeout";
-            this.numericUpDownComReadTimeout.Size = new System.Drawing.Size(46, 16);
+            this.numericUpDownComReadTimeout.Size = new System.Drawing.Size(61, 18);
             this.numericUpDownComReadTimeout.TabIndex = 45;
             this.toolTip1.SetToolTip(this.numericUpDownComReadTimeout, "Время ожидания ответа одного счетчика");
             this.numericUpDownComReadTimeout.Value = new decimal(new int[] {
@@ -253,10 +256,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(151, 13);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(201, 16);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(21, 13);
+            this.label1.Size = new System.Drawing.Size(24, 17);
             this.label1.TabIndex = 46;
             this.label1.Text = "мс";
             // 
@@ -268,8 +270,8 @@
             0,
             0,
             0});
-            this.numericUpDownComWriteTimeout.Location = new System.Drawing.Point(321, 34);
-            this.numericUpDownComWriteTimeout.Margin = new System.Windows.Forms.Padding(2);
+            this.numericUpDownComWriteTimeout.Location = new System.Drawing.Point(428, 42);
+            this.numericUpDownComWriteTimeout.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.numericUpDownComWriteTimeout.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -281,7 +283,7 @@
             0,
             0});
             this.numericUpDownComWriteTimeout.Name = "numericUpDownComWriteTimeout";
-            this.numericUpDownComWriteTimeout.Size = new System.Drawing.Size(46, 16);
+            this.numericUpDownComWriteTimeout.Size = new System.Drawing.Size(61, 18);
             this.numericUpDownComWriteTimeout.TabIndex = 56;
             this.toolTip1.SetToolTip(this.numericUpDownComWriteTimeout, "Время по прошествии которого происходит таймаут записи. Не используется в данной " +
         "версии.");
@@ -294,10 +296,10 @@
             // checkBoxTcp
             // 
             this.checkBoxTcp.AutoSize = true;
-            this.checkBoxTcp.Location = new System.Drawing.Point(260, 37);
-            this.checkBoxTcp.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBoxTcp.Location = new System.Drawing.Point(347, 46);
+            this.checkBoxTcp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.checkBoxTcp.Name = "checkBoxTcp";
-            this.checkBoxTcp.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxTcp.Size = new System.Drawing.Size(57, 21);
             this.checkBoxTcp.TabIndex = 55;
             this.checkBoxTcp.Text = "TCP";
             this.toolTip1.SetToolTip(this.checkBoxTcp, "Активировать режим связи по TCP/IP");
@@ -307,10 +309,10 @@
             // button4
             // 
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(152, 14);
-            this.button4.Margin = new System.Windows.Forms.Padding(2);
+            this.button4.Location = new System.Drawing.Point(203, 17);
+            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(49, 38);
+            this.button4.Size = new System.Drawing.Size(65, 47);
             this.button4.TabIndex = 52;
             this.button4.Text = "Опросить";
             this.toolTip1.SetToolTip(this.button4, "Опрос прибора с указанным слева серийным номером.");
@@ -320,15 +322,27 @@
             // btnGetMetersTable
             // 
             this.btnGetMetersTable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGetMetersTable.Location = new System.Drawing.Point(251, 3);
-            this.btnGetMetersTable.Margin = new System.Windows.Forms.Padding(2);
+            this.btnGetMetersTable.Location = new System.Drawing.Point(335, 4);
+            this.btnGetMetersTable.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnGetMetersTable.Name = "btnGetMetersTable";
-            this.btnGetMetersTable.Size = new System.Drawing.Size(97, 25);
+            this.btnGetMetersTable.Size = new System.Drawing.Size(129, 31);
             this.btnGetMetersTable.TabIndex = 52;
             this.btnGetMetersTable.Text = "Приборы";
             this.toolTip1.SetToolTip(this.btnGetMetersTable, "Выполняется только проверка связи без получения каких-либо данных со счетчика");
             this.btnGetMetersTable.UseVisualStyleBackColor = true;
             this.btnGetMetersTable.Click += new System.EventHandler(this.btnGetMetersTable_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(850, 128);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(61, 53);
+            this.button1.TabIndex = 59;
+            this.button1.Text = "X";
+            this.toolTip1.SetToolTip(this.button1, "Попытаться DISCONECT");
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // groupBox1
             // 
@@ -345,11 +359,11 @@
             this.groupBox1.Controls.Add(this.richTextBox1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Location = new System.Drawing.Point(5, 369);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Location = new System.Drawing.Point(7, 454);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(611, 60);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox1.Size = new System.Drawing.Size(815, 74);
             this.groupBox1.TabIndex = 49;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Индивидуальный блок";
@@ -357,26 +371,29 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(413, 16);
+            this.label6.Location = new System.Drawing.Point(551, 20);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(27, 13);
+            this.label6.Size = new System.Drawing.Size(32, 17);
             this.label6.TabIndex = 61;
             this.label6.Text = "MID";
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(412, 30);
+            this.textBox2.Location = new System.Drawing.Point(549, 37);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(42, 20);
+            this.textBox2.Size = new System.Drawing.Size(55, 22);
             this.textBox2.TabIndex = 60;
             this.textBox2.Text = "1";
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(293, 17);
+            this.linkLabel1.Location = new System.Drawing.Point(391, 21);
+            this.linkLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(13, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(16, 17);
             this.linkLabel1.TabIndex = 59;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "2";
@@ -385,68 +402,65 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(318, 18);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Location = new System.Drawing.Point(424, 22);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 13);
+            this.label4.Size = new System.Drawing.Size(114, 17);
             this.label4.TabIndex = 58;
             this.label4.Text = "Таймаут записи";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(371, 37);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Location = new System.Drawing.Point(495, 46);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(21, 13);
+            this.label3.Size = new System.Drawing.Size(24, 17);
             this.label3.TabIndex = 57;
             this.label3.Text = "мс";
             // 
             // textBoxPort
             // 
-            this.textBoxPort.Location = new System.Drawing.Point(213, 34);
-            this.textBoxPort.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxPort.Location = new System.Drawing.Point(284, 42);
+            this.textBoxPort.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxPort.Name = "textBoxPort";
-            this.textBoxPort.Size = new System.Drawing.Size(43, 20);
+            this.textBoxPort.Size = new System.Drawing.Size(56, 22);
             this.textBoxPort.TabIndex = 54;
             this.textBoxPort.Text = "5001";
             // 
             // textBoxIp
             // 
-            this.textBoxIp.Location = new System.Drawing.Point(213, 14);
-            this.textBoxIp.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxIp.Location = new System.Drawing.Point(284, 17);
+            this.textBoxIp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxIp.Name = "textBoxIp";
-            this.textBoxIp.Size = new System.Drawing.Size(75, 20);
+            this.textBoxIp.Size = new System.Drawing.Size(99, 22);
             this.textBoxIp.TabIndex = 53;
             this.textBoxIp.Text = "192.168.1.101";
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(457, 14);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.richTextBox1.Location = new System.Drawing.Point(609, 17);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.richTextBox1.Size = new System.Drawing.Size(144, 39);
+            this.richTextBox1.Size = new System.Drawing.Size(191, 47);
             this.richTextBox1.TabIndex = 51;
             this.richTextBox1.Text = "";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 18);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(7, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 13);
+            this.label2.Size = new System.Drawing.Size(121, 17);
             this.label2.TabIndex = 50;
             this.label2.Text = "S/N или телефон";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(8, 34);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox1.Location = new System.Drawing.Point(11, 42);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(135, 20);
+            this.textBox1.Size = new System.Drawing.Size(179, 22);
             this.textBox1.TabIndex = 49;
             this.textBox1.Text = "89169012107";
             // 
@@ -456,10 +470,10 @@
             this.pictureBoxLogo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBoxLogo.Image = global::elfextendedapp.Properties.Resources.pi_logo_2;
             this.pictureBoxLogo.InitialImage = null;
-            this.pictureBoxLogo.Location = new System.Drawing.Point(556, 4);
-            this.pictureBoxLogo.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBoxLogo.Location = new System.Drawing.Point(741, 5);
+            this.pictureBoxLogo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBoxLogo.Name = "pictureBoxLogo";
-            this.pictureBoxLogo.Size = new System.Drawing.Size(61, 59);
+            this.pictureBoxLogo.Size = new System.Drawing.Size(80, 72);
             this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxLogo.TabIndex = 50;
             this.pictureBoxLogo.TabStop = false;
@@ -469,21 +483,20 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(480, 22);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Location = new System.Drawing.Point(640, 27);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(46, 26);
+            this.label5.Size = new System.Drawing.Size(55, 31);
             this.label5.TabIndex = 51;
             this.label5.Text = "УМ";
             // 
             // rbDaily
             // 
             this.rbDaily.AutoSize = true;
-            this.rbDaily.Location = new System.Drawing.Point(8, 42);
+            this.rbDaily.Location = new System.Drawing.Point(11, 52);
+            this.rbDaily.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rbDaily.Name = "rbDaily";
-            this.rbDaily.Size = new System.Drawing.Size(54, 17);
+            this.rbDaily.Size = new System.Drawing.Size(67, 21);
             this.rbDaily.TabIndex = 55;
-            this.rbDaily.TabStop = true;
             this.rbDaily.Tag = "daily";
             this.rbDaily.Text = "Сутки";
             this.rbDaily.UseVisualStyleBackColor = true;
@@ -492,11 +505,11 @@
             // rbMonthly
             // 
             this.rbMonthly.AutoSize = true;
-            this.rbMonthly.Location = new System.Drawing.Point(106, 42);
+            this.rbMonthly.Location = new System.Drawing.Point(141, 52);
+            this.rbMonthly.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rbMonthly.Name = "rbMonthly";
-            this.rbMonthly.Size = new System.Drawing.Size(58, 17);
+            this.rbMonthly.Size = new System.Drawing.Size(71, 21);
             this.rbMonthly.TabIndex = 56;
-            this.rbMonthly.TabStop = true;
             this.rbMonthly.Tag = "monthly";
             this.rbMonthly.Text = "Месяц";
             this.rbMonthly.UseVisualStyleBackColor = true;
@@ -505,11 +518,11 @@
             // rbHalfs
             // 
             this.rbHalfs.AutoSize = true;
-            this.rbHalfs.Location = new System.Drawing.Point(170, 42);
+            this.rbHalfs.Location = new System.Drawing.Point(227, 52);
+            this.rbHalfs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rbHalfs.Name = "rbHalfs";
-            this.rbHalfs.Size = new System.Drawing.Size(91, 17);
+            this.rbHalfs.Size = new System.Drawing.Size(116, 21);
             this.rbHalfs.TabIndex = 57;
-            this.rbHalfs.TabStop = true;
             this.rbHalfs.Tag = "halfs";
             this.rbHalfs.Text = "Получасовой";
             this.rbHalfs.UseVisualStyleBackColor = true;
@@ -520,28 +533,46 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(68, 44);
+            this.checkBox1.Location = new System.Drawing.Point(91, 54);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.Size = new System.Drawing.Size(18, 17);
             this.checkBox1.TabIndex = 58;
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // rbDriver1
             // 
-            this.button1.Location = new System.Drawing.Point(621, 72);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(46, 43);
-            this.button1.TabIndex = 59;
-            this.button1.Text = "X";
-            this.toolTip1.SetToolTip(this.button1, "Попытаться DISCONECT");
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.rbDriver1.AutoSize = true;
+            this.rbDriver1.Checked = true;
+            this.rbDriver1.Location = new System.Drawing.Point(850, 24);
+            this.rbDriver1.Name = "rbDriver1";
+            this.rbDriver1.Size = new System.Drawing.Size(87, 21);
+            this.rbDriver1.TabIndex = 60;
+            this.rbDriver1.TabStop = true;
+            this.rbDriver1.Tag = "rtu";
+            this.rbDriver1.Text = "UM_RTU";
+            this.rbDriver1.UseVisualStyleBackColor = true;
+            this.rbDriver1.CheckedChanged += new System.EventHandler(this.rbDriver1_CheckedChanged);
+            // 
+            // rbDriver2
+            // 
+            this.rbDriver2.AutoSize = true;
+            this.rbDriver2.Location = new System.Drawing.Point(850, 47);
+            this.rbDriver2.Name = "rbDriver2";
+            this.rbDriver2.Size = new System.Drawing.Size(74, 21);
+            this.rbDriver2.TabIndex = 61;
+            this.rbDriver2.Tag = "um31";
+            this.rbDriver2.Text = "UM_31";
+            this.rbDriver2.UseVisualStyleBackColor = true;
+            this.rbDriver2.CheckedChanged += new System.EventHandler(this.rbDriver1_CheckedChanged);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(679, 454);
+            this.ClientSize = new System.Drawing.Size(973, 559);
+            this.Controls.Add(this.rbDriver2);
+            this.Controls.Add(this.rbDriver1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.rbHalfs);
@@ -563,7 +594,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Заголовок генерируется автоматически";
@@ -622,6 +653,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RadioButton rbDriver1;
+        private System.Windows.Forms.RadioButton rbDriver2;
     }
 }
 

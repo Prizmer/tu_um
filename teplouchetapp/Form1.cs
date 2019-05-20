@@ -14,7 +14,6 @@ using System.Configuration;
 using System.Threading;
 using System.Diagnostics;
 using System.Globalization;
-//using System.Configuration.Assemblies;
 
 using System.Net;
 using System.Net.Sockets;
@@ -178,7 +177,7 @@ namespace elfextendedapp
 
         #endregion
 
-        UMRTU40Driver Meter = null;
+        UMDriver Meter = null;
         VirtualPort Vp = null;
 
         //изначально ни один процесс не выполняется, все остановлены
@@ -204,7 +203,9 @@ namespace elfextendedapp
 
             try
             {
-                Meter = new UMRTU40Driver();
+                if (rbDriver1.Checked) Meter = new UMRTU40Driver();
+                if (rbDriver2.Checked) Meter = new UM31Driver();
+
                 Meter.Init(mAddr, mPass, virtPort);
                 return true;
             }
@@ -353,7 +354,10 @@ namespace elfextendedapp
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.rbDriver2.Checked = true;
             checkBoxTcp.Checked = true;
+
+
 
             //setting up dialogs
             ofd1.Filter = "Excel files (*.xls) | *.xls";
@@ -743,7 +747,7 @@ namespace elfextendedapp
 
                 Meter.Init(0, meterId.ToString(), Vp);
 
-                List<UMRTU40Driver.ValueUM> valueList = new List<UMRTU40Driver.ValueUM>();
+                List<ValueUM> valueList = new List<ValueUM>();
                 List<RecordPowerSlice> rpsList = new List<RecordPowerSlice>();
                 
                 float[] results = new float[capturedParams.Length];
@@ -1124,7 +1128,7 @@ namespace elfextendedapp
             {
                 if (rbDaily.Checked)
                 {
-                    List<UMRTU40Driver.ValueUM> lst = new List<UMRTU40Driver.ValueUM>();
+                    List<ValueUM> lst = new List<ValueUM>();
                     Meter.getDailyValuesForID(int.Parse(textBox2.Text), DateTime.Now.Date, out lst);
                     richTextBox1.Clear();
                     richTextBox1.Text += lst.Count + " - записей\n";
@@ -1161,6 +1165,18 @@ namespace elfextendedapp
        
             }
             Vp.Close();
+        }
+
+        private void rbDriver1_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton target = (RadioButton)sender;
+            if (target.Tag.ToString() == "rtu")
+            {
+
+            } else
+            {
+
+            }
         }
     }
 }

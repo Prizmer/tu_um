@@ -111,6 +111,10 @@
     <None Include="Resources\pi_logo_2.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\UM31Driver\UM31Driver.csproj">
+      <Project>{90afadab-5a77-410f-bf65-f5ec5382485c}</Project>
+      <Name>UM31Driver</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UMDriver\UMDriver.csproj">
       <Project>{48775b36-87cb-4969-a544-b1048eff259b}</Project>
       <Name>UMDriver</Name>

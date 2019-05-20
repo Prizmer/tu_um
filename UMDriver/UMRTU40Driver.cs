@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace Drivers.UMDriver
 {
-    public class UMRTU40Driver: CMeter, IMeter
+    public class UMRTU40Driver: CMeter, IMeter, UMDriver
     {
         //пароль к самой ум
         string password = "00000000";
@@ -26,6 +26,7 @@ namespace Drivers.UMDriver
         Dictionary<ushort, string> monthlyCorrelationDict = new Dictionary<ushort, string>();
         Dictionary<ushort, string> slicesCorrelationDict = new Dictionary<ushort, string>();
 
+        UMCommon umCommon = new UMCommon();
 
         public UMRTU40Driver()
         {
@@ -64,10 +65,21 @@ namespace Drivers.UMDriver
             this.m_vport = data_vport;
 
             meterIdParsingResult = true;
-            meterId = (int)address;
+
 
             //
-           // int.TryParse(pass, out meterId);
+            meterIdParsingResult = int.TryParse(pass, out meterId);
+
+            if (!meterIdParsingResult)
+            {
+                meterId = (int)address;
+                WriteToLog("Init драйвера, не удалось распарсить пароль, использую сетевой адрес " + meterId);
+            } else
+            {
+                WriteToLog("Init драйвера, использую то, что в пароле " + meterId);
+            }
+
+
             //this.password = pass.Length > 0 ? pass : "00000000";
 
 
@@ -77,38 +89,7 @@ namespace Drivers.UMDriver
             listOfMonthlyValues.Clear();
         }
 
-        public struct ValueUM
-        {
-            public float value;
-            public DateTime dt;
-            public int address;
-            public int channel;
-            public string caption;
-            public string name;
-            public string meterSN;
-        }
-        public enum MeterModels
-        {
-            USPD = 0,
-            M200 = 1,
-            M230 = 3,
-            SET4TM = 4,
-            M203 = 31,
-            M206 = 32,
-            MConcentrator = 91,
-            PulsarRadio = 93,
-            Impulse = 121
-        }
-        public enum InterfaceModels
-        {
-            CAN1,
-            CAN2,
-            CAN3,
-            RS485_2,
-            RS485_1,
-            RS232,
-            CONCENTRATOR
-        }
+
 
         private List<byte> wrapCmd(string cmd, string prms = "")
         {
@@ -118,7 +99,7 @@ namespace Drivers.UMDriver
             byte[] CRCFeedASCIIArr = ASCIIEncoding.ASCII.GetBytes(CRCFeedString);
             fullCmdList.AddRange(CRCFeedASCIIArr);
 
-            byte[] CRCASCIIByteArr = makeCRC(CRCFeedASCIIArr);
+            byte[] CRCASCIIByteArr = umCommon.makeCRC(CRCFeedASCIIArr);
             string CRCASCIIStr = Encoding.ASCII.GetString(CRCASCIIByteArr).Replace("-", "");
             fullCmdList.AddRange(CRCASCIIByteArr);
 
@@ -132,12 +113,7 @@ namespace Drivers.UMDriver
             return fullCmdList;
         }
 
-        public enum UM_VERSION
-        {
-            UM31,
-            UM40,
-            UNKNOWN
-        }
+
 
         public int softwareVersion = 22;
 
@@ -218,17 +194,6 @@ namespace Drivers.UMDriver
         #endregion
 
         #region Таблица приборов
-
-        public struct MetersTableEntry
-        {
-            public int id;
-            public string meterName;
-            public int networkAddr;
-            public string interfaceType;
-            public string passFormat;
-            public string pass1;
-            public string pass2;
-        }
 
         public bool getMetersTableEntriesNumber(out int cnt)
         {
@@ -500,7 +465,7 @@ namespace Drivers.UMDriver
             m_vport.WriteReadData(FindPacketSignature, cmd.ToArray(), ref incommingData, cmd.Count, -1);
 
             string answ = ASCIIEncoding.ASCII.GetString(incommingData);
-            WriteToLog("getDailyValuesForID_ANSW: " + answ); 
+            // WriteToLog("getDailyValuesForID_ANSW: " + answ); 
 
 
             List<string> recordStringsForDates = new List<string>();
@@ -517,13 +482,21 @@ namespace Drivers.UMDriver
             {
                 int tmpIndexDt = answ.IndexOf("<DT", indexDt + 1);
                 string tmpVal = "";
-                if (tmpIndexDt == -1)
-                {
-                    tmpVal = answ.Substring(indexDt, endIndex - indexDt + 1);
+                try
+                {           
+                    if (tmpIndexDt == -1)
+                    {
+                        tmpVal = answ.Substring(indexDt, endIndex - indexDt + 1);
+                    }
+                    else
+                    {
+                        tmpVal = answ.Substring(indexDt, tmpIndexDt - indexDt + 1);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    tmpVal = answ.Substring(indexDt, tmpIndexDt - indexDt + 1);
+                    // WriteToLog("getDailyValuesForID, ex: " + ex.Message);
+                    return false ;
                 }
 
                 indexDt = tmpIndexDt;
@@ -576,9 +549,15 @@ namespace Drivers.UMDriver
             }
 
             if (umVals.Count > 0)
+            {
+                WriteToLog("getDailyValuesForID, val0: " + umVals[0].dt + ": " + umVals[0].value);
                 return true;
+            }
             else
+            {
+                WriteToLog("getDailyValuesForID, umVals.Count < 0");
                 return false;
+            }
         }
 
         public bool getDailyValuesForID(int id, out List<ValueUM> umVals)
@@ -901,67 +880,6 @@ namespace Drivers.UMDriver
 
         #endregion
 
-        #region CRC Вычисление
-
-        UInt16 crc16_update_poly(UInt16 crc, byte a)
-        {
-            crc ^= a;
-            for (byte i = 0; i < 8; ++i)
-            {
-                if ((crc & 1) == 1)
-                    crc = (UInt16)((crc >> 1) ^ 0xA001);
-                else
-                    crc = (UInt16)(crc >> 1);
-            }
-            return crc;
-        }
-
-        UInt16 crc16_calc_poly(byte[] buf, int len, UInt16 crc)
-        {
-
-            for (int i = 0; i < len; i++)
-                crc = crc16_update_poly(crc, buf[i]);
-
-            return crc;
-        }
-
-        public byte[] StringToByteArray(string hex)
-        {
-            return Enumerable.Range(0, hex.Length)
-                                .Where(x => x % 2 == 0)
-                                .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
-                                .ToArray();
-        }
-
-        byte[] makeCRC(byte[] buf)
-        {
-            UInt16 crc = 0x40BF;
-            UInt16 resCrcNumb = crc16_calc_poly(buf, buf.Length, crc);
-
-            char[] CRCCharArr = Convert.ToString(resCrcNumb, 16).ToUpper().ToCharArray();
-            int zerosNeeded = 4 - CRCCharArr.Length;
-
-            List<char> charList = new List<char>();
-            for (int i = 0; i < zerosNeeded; i++)
-                charList.Add('0');
-            charList.AddRange(CRCCharArr);
-
-            CRCCharArr = charList.ToArray();
-
-            List<byte> CRCByteList = new List<byte>();
-            byte[] CRCASCIICharBytes = Encoding.ASCII.GetBytes(CRCCharArr);
-            WriteToLog(BitConverter.ToString(CRCASCIICharBytes));
-
-            CRCByteList.Add(CRCASCIICharBytes[2]);
-            CRCByteList.Add(CRCASCIICharBytes[3]);
-            CRCByteList.Add(CRCASCIICharBytes[0]);
-            CRCByteList.Add(CRCASCIICharBytes[1]);
-
-            return CRCByteList.ToArray();
-        }
-
-        #endregion
-
 
         #region Реализация интерфейса СО
 
@@ -992,6 +910,9 @@ namespace Drivers.UMDriver
 
         public bool ReadSerialNumber(ref string serial_number)
         {
+
+            //WriteToLog("<< ReadSerialNumber: start, meterid: " + meterId);
+
             serial_number = "";
 
             List<ValueUM> valList = new List<ValueUM>();
@@ -999,7 +920,11 @@ namespace Drivers.UMDriver
             else if (listOfMonthlyValues.Count > 0) valList = listOfMonthlyValues;
             else if (!getDailyValuesForID(meterId, DateTime.Now.Date, out valList) || valList.Count == 0) return false;
 
+            //WriteToLog("ReadSerialNumber: daily values, cnt: " + valList.Count);
             serial_number = valList[0].meterSN;
+
+            //WriteToLog("sn[last]: " + valList[valList.Count - 1].meterSN);
+            //WriteToLog(">> ReadSerialNumber: end, sn[0]: " + serial_number);
             return true;
         }
 

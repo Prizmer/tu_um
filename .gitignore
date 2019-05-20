@@ -8,3 +8,4 @@ obj
 obj/*
 /teplouchetapp/bin/Debug/*.pi
 /teplouchetapp/bin/Debug/teplouchetlog.txt
+*.log
